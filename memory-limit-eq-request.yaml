@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: memory-limit-eq-request
+  name: memory-limit-eq-request
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: memory-limit-eq-request
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: memory-limit-eq-request
+    spec:
+      containers:
+      - image: litmuschaos/stress-ng
+        args:
+          - --vm-bytes=1G
+          - --vm=1
+        imagePullPolicy: IfNotPresent
+        name: stress-ng
+        resources:
+          requests:
+            cpu: 111m
+            memory: 111Mi
+          limits:
+            cpu: 111m
+            memory: 111Mi

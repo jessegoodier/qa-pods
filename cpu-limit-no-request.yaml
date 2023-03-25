@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cpu-limit-no-request
+  name: cpu-limit-no-request
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cpu-limit-no-request
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: cpu-limit-no-request
+    spec:
+      containers:
+      - image: litmuschaos/stress-ng
+        args:
+          - --cpu=1
+          - --timeout=200d
+        imagePullPolicy: IfNotPresent
+        name: stress-ng
+        resources:
+          limits:
+            cpu: 111m
+            memory: 111Mi
+          requests:
+            cpu: 0m
+            memory: 0Mi

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: no-load-with-requests
+  name: no-load-with-requests
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: no-load-with-requests
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: no-load-with-requests
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        resources:
+          requests:
+            cpu: 111m
+            memory: 111Mi
+          limits:
+            cpu: 111m
+            memory: 111Mi
