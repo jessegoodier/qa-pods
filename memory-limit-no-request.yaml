@@ -25,11 +25,11 @@ spec:
           - --vm-bytes=1G
           - --vm=1
         imagePullPolicy: IfNotPresent
-        name: stress-ng
+        name: memory-limit-no-request
         resources:
           limits:
-            cpu: 111m
-            memory: 111Mi
+            cpu: 22m
+            memory: 22Mi
           requests:
             cpu: 0m
             memory: 0Mi

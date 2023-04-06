@@ -25,11 +25,10 @@ spec:
           - --cpu=1
           - --timeout=200d
         imagePullPolicy: IfNotPresent
-        name: stress-ng
+        name: cpu-limit-eq-request
         resources:
           requests:
-            cpu: 111m
-            memory: 111Mi
+            cpu: 66m
           limits:
-            cpu: 111m
-            memory: 111Mi
+            cpu: 66m
+            memory: 66Mi
