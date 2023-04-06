@@ -5,14 +5,14 @@ metadata:
     app: no-load-with-requests
   name: no-load-with-requests
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: no-load-with-requests
   strategy:
     rollingUpdate:
       maxSurge: 25%
-      maxUnavailable: 25%
+      maxUnavailable: 50%
     type: RollingUpdate
   template:
     metadata:

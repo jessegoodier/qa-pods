@@ -5,14 +5,14 @@ metadata:
     app: cpu-limit-eq-request
   name: cpu-limit-eq-request
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: cpu-limit-eq-request
   strategy:
     rollingUpdate:
       maxSurge: 25%
-      maxUnavailable: 25%
+      maxUnavailable: 50%
     type: RollingUpdate
   template:
     metadata:
