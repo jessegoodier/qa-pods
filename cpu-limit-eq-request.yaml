@@ -5,18 +5,6 @@ metadata:
     app: cpu-limit-eq-request
   name: cpu-limit-eq-request
 spec:
-      nodeSelector:
-        kubernetes.io/role: agent
-        beta.kubernetes.io/os: linux
-        type: virtual-kubelet
-      tolerations:
-      - key: virtual-kubelet.io/providerapiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: cpu-limit-eq-request
-  name: cpu-limit-eq-request
-spec:
   replicas: 2
   selector:
     matchLabels:
@@ -40,36 +28,6 @@ spec:
         operator: Exists
       - key: azure.com/aci
         effect: NoSchedule
-      containers:
-      - image: litmuschaos/stress-ng
-        args:
-          - --cpu=1
-          - --timeout=200d
-        imagePullPolicy: IfNotPresent
-        name: cpu-limit-eq-request
-        resources:
-          requests:
-            cpu: 66m
-          limits:
-            cpu: 66m
-            memory: 66Mi
-        operator: Exists
-      - key: azure.com/aci
-        effect: NoSchedule
-  replicas: 2
-  selector:
-    matchLabels:
-      app: cpu-limit-eq-request
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 50%
-    type: RollingUpdate
-  template:
-    metadata:
-      labels:
-        app: cpu-limit-eq-request
-    spec:
       containers:
       - image: litmuschaos/stress-ng
         args:
