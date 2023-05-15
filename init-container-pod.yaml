@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: init-container-pod
+  name: init-container-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: init-container-pod
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: init-container-pod
+    spec:
+      initContainers:
+      - name: init-container-55mi-mem
+        image: litmuschaos/stress-ng
+        args:
+          - --vm-bytes=1G
+          - --vm=1
+          - --timeout=3m
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 10m
+            memory: 55Mi
+          limits:
+            cpu: 100m
+            memory: 55Mi
+      containers:
+      - name: nginx
+        image: nginx
