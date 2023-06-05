@@ -23,6 +23,11 @@ spec:
       - image: litmuschaos/stress-ng
         securityContext:
           runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]
         args:
           - --cpu=1
           - --timeout=200d
