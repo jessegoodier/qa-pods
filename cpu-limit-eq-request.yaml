@@ -21,6 +21,8 @@ spec:
     spec:
       containers:
       - image: litmuschaos/stress-ng
+        securityContext:
+          runAsNonRoot: true
         args:
           - --cpu=1
           - --timeout=200d
