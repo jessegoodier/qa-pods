@@ -37,4 +37,31 @@ spec:
           seccompProfile:
             type: RuntimeDefault
           capabilities:
-            drop: ["ALL"]            
+            drop: ["ALL"]     
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: default-conf
+          readOnly: true
+      volumes:
+      - name: default-conf
+        configMap:
+          name: nginx-echo
+          items:
+            - key: default.conf
+              path: default.conf                   
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-echo
+  namespace: demo-app1
+data:
+  default.conf: |
+    server {
+        listen 8080;
+        location / {
+            default_type text/plain;
+            expires -1;
+            return 200 'Server address: $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\nHost header: $Host\n';
+        }
+    }            
