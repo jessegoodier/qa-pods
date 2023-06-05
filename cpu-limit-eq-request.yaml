@@ -22,8 +22,8 @@ spec:
       containers:
       - image: litmuschaos/stress-ng
         args:
-          - --cpu=1
-          - --timeout=200d
+        - --cpu=1
+        - --timeout=200d
         imagePullPolicy: IfNotPresent
         name: cpu-limit-eq-request
         resources:
@@ -32,9 +32,8 @@ spec:
           limits:
             cpu: 66m
             memory: 66Mi
-        image: nginx
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault

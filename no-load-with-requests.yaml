@@ -1,3 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-echo
+data:
+  default.conf: |
+    server {
+        listen 8080;
+        location / {
+            default_type text/plain;
+            expires -1;
+            return 200 'Server address: $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\nHost header: $Host\n';
+        }
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,9 +35,9 @@ spec:
         app: no-load-with-requests
     spec:
       containers:
-      - image: nginx
+      - name: no-load-with-requests
+        image: nginxinc/nginx-unprivileged:stable-alpine
         imagePullPolicy: IfNotPresent
-        name: no-load-with-requests
         resources:
           requests:
             cpu: 22m
@@ -30,14 +45,13 @@ spec:
           limits:
             cpu: 22m
             memory: 22Mi
-        image: nginx
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault
           capabilities:
-            drop: ["ALL"]     
+            drop: ["ALL"]
         volumeMounts:
         - mountPath: /etc/nginx/conf.d
           name: default-conf
@@ -48,19 +62,5 @@ spec:
           name: nginx-echo
           items:
             - key: default.conf
-              path: default.conf                   
+              path: default.conf
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nginx-echo
-data:
-  default.conf: |
-    server {
-        listen 8080;
-        location / {
-            default_type text/plain;
-            expires -1;
-            return 200 'Server address: $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\nHost header: $Host\n';
-        }
-    }            

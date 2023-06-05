@@ -25,7 +25,7 @@ spec:
           - --cpu=1
           - --timeout=200d
         imagePullPolicy: IfNotPresent
-        name: cpu-limit-no-request     
+        name: cpu-limit-no-request
         resources:
           limits:
             cpu: 77m
@@ -33,11 +33,10 @@ spec:
           requests:
             cpu: 0m
             memory: 0Mi
-        image: nginx
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault
           capabilities:
-            drop: ["ALL"]            
+            drop: ["ALL"]

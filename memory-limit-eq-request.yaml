@@ -33,11 +33,10 @@ spec:
           limits:
             cpu: 22m
             memory: 22Mi
-        image: nginx
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault
           capabilities:
-            drop: ["ALL"]            
+            drop: ["ALL"]

@@ -28,12 +28,12 @@ spec:
           - --timeout=3m
         imagePullPolicy: IfNotPresent
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault
           capabilities:
-            drop: ["ALL"]        
+            drop: ["ALL"]
         resources:
           requests:
             cpu: 10m
@@ -42,8 +42,8 @@ spec:
             cpu: 100m
             memory: 55Mi
       containers:
-      - name: nginx
-        image: nginx
+      - name: after-init-container
+        image: nginxinc/nginx-unprivileged:stable-alpine
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
