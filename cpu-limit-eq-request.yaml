@@ -21,13 +21,6 @@ spec:
     spec:
       containers:
       - image: litmuschaos/stress-ng
-        securityContext:
-          runAsNonRoot: true
-          allowPrivilegeEscalation: false
-          seccompProfile:
-            type: RuntimeDefault
-          capabilities:
-            drop: ["ALL"]
         args:
           - --cpu=1
           - --timeout=200d
@@ -39,3 +32,11 @@ spec:
           limits:
             cpu: 66m
             memory: 66Mi
+        image: nginx
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]

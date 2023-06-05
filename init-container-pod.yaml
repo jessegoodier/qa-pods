@@ -27,6 +27,13 @@ spec:
           - --vm=1
           - --timeout=3m
         imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]        
         resources:
           requests:
             cpu: 10m
@@ -37,3 +44,10 @@ spec:
       containers:
       - name: nginx
         image: nginx
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]

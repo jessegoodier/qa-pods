@@ -33,3 +33,11 @@ spec:
           requests:
             cpu: 0m
             memory: 0Mi
+        image: nginx
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]            
