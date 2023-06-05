@@ -36,14 +36,21 @@ spec:
             drop: ["ALL"]
         resources:
           requests:
-            cpu: 10m
+            cpu: 55m
             memory: 55Mi
           limits:
-            cpu: 100m
+            cpu: 55m
             memory: 55Mi
       containers:
       - name: after-init-container
         image: nginxinc/nginx-unprivileged:stable-alpine
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 10m
+            memory: 10Mi
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
